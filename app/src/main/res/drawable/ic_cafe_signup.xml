@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp"
+    android:height="120dp"
+    android:viewportWidth="120"
+    android:viewportHeight="120">
+
+    <!-- 사용자 머리 -->
+    <path
+        android:fillColor="#E91E63"
+        android:strokeColor="#E91E63"
+        android:strokeWidth="5"
+        android:pathData="M60,30 A15,15 0 1,1 59.9,30"
+        android:strokeLineCap="round" />
+
+    <!-- 사용자 몸통 (어깨/토르소) -->
+    <path
+        android:fillColor="#E91E63"
+        android:strokeColor="#E91E63"
+        android:strokeWidth="5"
+        android:pathData="M35,85 C35,65 85,65 85,85 C85,100 35,100 35,85"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"/>
+
+    <!-- 플러스 기호 (가입 의미) -->
+    <path
+        android:fillColor="#E91E63"
+        android:pathData="M95,55 L95,70 L110,70 L110,75 L95,75 L95,90 L90,90 L90,75 L75,75 L75,70 L90,70 L90,55 Z"/>
+
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#E91E63"
+        android:strokeWidth="5"
+        android:pathData="M60,10
+                      A50,50 0 1,1 59.9,10" />
+
+</vector>
