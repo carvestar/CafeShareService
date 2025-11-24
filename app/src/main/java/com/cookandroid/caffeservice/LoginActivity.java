@@ -7,8 +7,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.ImageButton; // ⭐️ ImageButton import 추가 ⭐️
+import android.widget.ImageButton;
 import android.widget.Toast;
+import com.cookandroid.caffeservice.MainActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -29,13 +30,13 @@ import com.cookandroid.caffeservice.api.RetrofitClient;
 import com.cookandroid.caffeservice.LoginData.LoginRequest;
 import com.cookandroid.caffeservice.LoginData.LoginResponse;
 import com.cookandroid.caffeservice.SignupActivity;
-import com.cookandroid.caffeservice.LoginData.GoogleLoginRequest; // ⭐️ GoogleLoginRequest 모델 임포트 ⭐️
+import com.cookandroid.caffeservice.LoginData.GoogleLoginRequest;
 
 
 public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "LoginActivity";
-    private static final int RC_SIGN_IN = 9001; // Google 로그인 요청 코드
+    private static final int RC_SIGN_IN = 9001;
 
     private GoogleSignInClient mGoogleSignInClient;
 
@@ -43,8 +44,6 @@ public class LoginActivity extends AppCompatActivity {
     private EditText passwordEditText;
     private Button loginButton;
     private TextView signUpText;
-
-    // ⭐️ ImageButton 타입으로 변경 ⭐️
     private ImageButton googleLoginButton;
 
     @Override
@@ -57,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
         passwordEditText = findViewById(R.id.edit_text_password);
         loginButton = findViewById(R.id.button_login);
         signUpText = findViewById(R.id.text_signup);
-        googleLoginButton = findViewById(R.id.button_google_login); // ⭐️ ImageButton ID 연결 ⭐️
+        googleLoginButton = findViewById(R.id.button_google_login);
 
         // 2. GoogleSignInOptions 설정 및 클라이언트 객체 생성
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -86,6 +85,22 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
+    // -----------------------------------------------------
+    // ⭐️ 화면 전환 유틸리티 메서드 ⭐️
+    // -----------------------------------------------------
+
+    private void navigateToMain(String token) {
+        // ⚠️ TODO: 여기서 토큰(token)을 SharedPreferences 등에 저장해야 합니다. ⚠️
+        Toast.makeText(this, "로그인 성공! 메인 화면으로 이동합니다.", Toast.LENGTH_SHORT).show();
+
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        // 로그인 화면을 스택에서 제거하여 뒤로가기 버튼으로 돌아오지 않게 합니다.
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        // finish(); // FLAG_ACTIVITY_CLEAR_TASK를 사용하면 finish()를 명시하지 않아도 됩니다.
+    }
+
 
     // -----------------------------------------------------
     // ⭐️ Google 로그인 로직 ⭐️
@@ -120,15 +135,19 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void sendTokenToServer(String token) {
-        // ⚠️ GoogleLoginRequest 클래스가 String token 필드를 가진 채 정의되어 있어야 합니다!
-
         RetrofitClient.getAuthService().googleLogin(new GoogleLoginRequest(token))
                 .enqueue(new Callback<LoginResponse>() {
                     @Override
                     public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                         if (response.isSuccessful() && response.body() != null) {
-                            Toast.makeText(LoginActivity.this, "Google 로그인 성공!", Toast.LENGTH_SHORT).show();
-                            // TODO: 메인 화면으로 이동 및 JWT 저장 로직 구현
+                            LoginResponse loginResponse = response.body();
+                            if (loginResponse.isSuccess()) {
+                                // ⭐️ 1. Google 로그인 성공 시 MainActivity로 이동 ⭐️
+                                String accessToken = loginResponse.getAccessToken();
+                                navigateToMain(accessToken);
+                            } else {
+                                Toast.makeText(LoginActivity.this, "Google 로그인 실패: 서버 처리 오류", Toast.LENGTH_LONG).show();
+                            }
                         } else {
                             Toast.makeText(LoginActivity.this, "Google 로그인 실패: 서버 처리 오류", Toast.LENGTH_LONG).show();
                             Log.e(TAG, "Server error code: " + response.code());
@@ -144,17 +163,13 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     // -----------------------------------------------------
-    // ⭐️ 일반 로그인 로직 (기존 코드 유지) ⭐️
+    // ⭐️ 일반 로그인 로직 ⭐️
     // -----------------------------------------------------
 
-    /**
-     * 사용자의 입력 값을 검증하고 백엔드 로그인 API를 호출하는 메서드입니다.
-     */
     private void attemptLogin() {
         String id = idEditText.getText().toString().trim();
         String password = passwordEditText.getText().toString().trim();
 
-        // 1. 기본적인 입력 유효성 검사
         if (id.isEmpty()) {
             Toast.makeText(this, "아이디를 입력해주세요.", Toast.LENGTH_SHORT).show();
             return;
@@ -166,10 +181,8 @@ public class LoginActivity extends AppCompatActivity {
 
         Log.d(TAG, "Login Attempt with ID: " + id);
 
-        // 2. 로그인 요청 객체 생성
         LoginRequest requestBody = new LoginRequest(id, password);
 
-        // 3. ⭐️ Retrofit API 호출 시작 및 비동기 처리 ⭐️
         RetrofitClient.getAuthService().login(requestBody).enqueue(new Callback<LoginResponse>() {
 
             @Override
@@ -178,8 +191,9 @@ public class LoginActivity extends AppCompatActivity {
                     LoginResponse loginResponse = response.body();
 
                     if (loginResponse != null && loginResponse.isSuccess()) {
-                        Toast.makeText(LoginActivity.this, loginResponse.getMessage(), Toast.LENGTH_SHORT).show();
-                        // ... (토큰 저장 및 메인 화면 이동 로직) ...
+                        // ⭐️ 2. 일반 로그인 성공 시 MainActivity로 이동 ⭐️
+                        String accessToken = loginResponse.getAccessToken();
+                        navigateToMain(accessToken);
 
                     } else {
                         String errorMessage = (loginResponse != null && loginResponse.getMessage() != null) ?

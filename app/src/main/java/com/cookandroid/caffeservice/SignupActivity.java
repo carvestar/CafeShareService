@@ -1,4 +1,4 @@
-package com.cookandroid.caffeservice; // ⚠️ 메인 패키지
+package com.cookandroid.caffeservice;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+// ⭐️ Handler와 Looper Import 추가 ⭐️
+import android.os.Handler;
+import android.os.Looper;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -17,7 +21,7 @@ import retrofit2.Response;
 import com.cookandroid.caffeservice.api.RetrofitClient;
 import com.cookandroid.caffeservice.LoginData.SignupRequest;
 import com.cookandroid.caffeservice.LoginData.SignupResponse;
-import com.cookandroid.caffeservice.LoginActivity; // 로그인 액티비티 임포트
+import com.cookandroid.caffeservice.LoginActivity;
 
 import java.io.IOException;
 
@@ -73,11 +77,9 @@ public class SignupActivity extends AppCompatActivity {
             // 서버 응답 도착 (HTTP 통신 성공)
             @Override
             public void onResponse(Call<SignupResponse> call, Response<SignupResponse> response) {
-                // 로그를 먼저 출력하여 서버 응답 확인 (디버깅)
                 Log.d(TAG, "Server Response Code: " + response.code());
 
                 if (response.isSuccessful()) {
-                    // HTTP Status Code 200~300 (성공)
                     SignupResponse signupResponse = response.body();
 
                     if (signupResponse != null && signupResponse.isSuccess()) {
@@ -88,10 +90,18 @@ public class SignupActivity extends AppCompatActivity {
                         Toast.makeText(SignupActivity.this, successMessage + " 이제 로그인하세요.", Toast.LENGTH_LONG).show();
                         Log.i(TAG, "Signup Success: " + successMessage);
 
-                        // 성공 후 로그인 화면으로 이동
-                        Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
-                        startActivity(intent);
-                        finish(); // 현재 화면 닫기
+                        // ⭐️⭐️ 최종 수정: Handler를 사용한 지연 실행 적용 (500ms) ⭐️⭐️
+                        new Handler(Looper.getMainLooper()).postDelayed(() -> {
+
+                            Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
+                            // 화면 스택을 정리하는 플래그 유지
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                            startActivity(intent);
+
+                            // 현재 화면 닫기 (지연 후 실행)
+                            finish();
+                        }, 500); // 0.5초 지연
 
                     } else {
                         // 회원가입 실패 (서버 응답에서 success=false인 경우, 예: ID 중복)
@@ -105,7 +115,6 @@ public class SignupActivity extends AppCompatActivity {
                     // HTTP Status Code 오류 (예: 400 Bad Request, 500 Internal Server Error 등)
                     String errorMsg = "서버 응답 오류 (" + response.code() + ")";
 
-                    // 상세 오류 메시지 파싱 시도 (JSON 응답이 아닐 수도 있음)
                     if (response.errorBody() != null) {
                         try {
                             String errorBody = response.errorBody().string();
