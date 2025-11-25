@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- 기본 색상 -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="gray">#CACACA</color>
+
+    <!-- 배경색-->
+    <color name="app_background_color">#FFF4F7</color>
+
+    <!-- 탭바 -->
+    <color name="tab_bar_background_color">#FDE5EB</color>
+
+    <!-- 로고 배경 -->
+    <color name="logo_background_color">#F9DBE2</color>
+
+    <!-- 연한 글씨 -->
+    <color name="text_light_color">#E39FAE</color>
+
+    <!-- 아이콘 -->
+    <color name="icon_color">#DD7793</color>
+
+    <!-- 진한 글씨 -->
+    <color name="text_dark_color">#BF4C65</color>
 </resources>

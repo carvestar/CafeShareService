@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/white"
+    android:layout_marginBottom="10dp">
+
+    <!-- 카페 이름 -->
+    <TextView
+        android:id="@+id/tvCafeName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="카페 이름"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"/>
+
+    <!-- 주소 -->
+    <TextView
+        android:id="@+id/tvAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="주소"
+        android:textSize="14sp"
+        android:textColor="@color/gray"
+        android:layout_marginTop="4dp"/>
+
+    <!-- 평점 -->
+    <TextView
+        android:id="@+id/tvRating"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="★ 4.5"
+        android:textSize="14sp"
+        android:textColor="@color/icon_color"
+        android:layout_marginTop="4dp"/>
+
+</LinearLayout>
