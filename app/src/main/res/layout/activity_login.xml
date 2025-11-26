@@ -15,7 +15,7 @@
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_marginTop="64dp"
-        android:src="@drawable/ic_cafe_finder"
+        android:src="@drawable/logo"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -37,33 +37,38 @@
             android:id="@+id/edit_text_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/bottom_line_pink"
             android:hint="아이디 6~12자"
             android:inputType="text"
+            android:minHeight="48dp"
             android:paddingBottom="10dp"
-            android:background="@drawable/bottom_line_pink"
             android:textColorHint="#E91E63"
-            android:layout_marginBottom="20dp"
-            android:textSize="16sp"/>
+            android:textSize="16sp" />
 
         <!-- 비밀번호 입력 필드 -->
         <EditText
             android:id="@+id/edit_text_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/bottom_line_pink"
             android:hint="영문+숫자+특수문자 6~12자"
             android:inputType="textPassword"
+            android:minHeight="48dp"
             android:paddingBottom="10dp"
-            android:background="@drawable/bottom_line_pink"
             android:textColorHint="#E91E63"
-            android:layout_marginBottom="10dp"
-            android:textSize="16sp"/>
+            android:textSize="16sp" />
 
         <!-- 자동 로그인 체크박스 -->
         <CheckBox
             android:id="@+id/checkbox_auto_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:minHeight="48dp"
             android:text="자동로그인"
+            android:paddingBottom="14dp"
+            android:paddingTop="14dp"
             android:layout_gravity="end"
             android:buttonTint="#E91E63"
             android:textColor="#E91E63"
