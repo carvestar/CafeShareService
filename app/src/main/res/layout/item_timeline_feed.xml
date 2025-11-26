@@ -7,7 +7,8 @@
     android:paddingTop="12dp"
     android:paddingBottom="12dp"
     android:gravity="center_vertical"
-    android:background="@drawable/item_bottom_border"> <!-- 구분선 Drawable 필요 -->
+    android:layout_marginBottom="6dp"
+    android:background="@drawable/item_bottom_border">
 
     <!-- 별 아이콘 (사용자가 클릭했음을 나타내는 역할) -->
     <ImageView
@@ -15,8 +16,7 @@
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_marginEnd="12dp"
-        android:src="@drawable/ic_star_outline"
-        app:tint="#FFC0CB"
+        android:src="@drawable/star"
         android:contentDescription="즐겨찾기 표시" />
 
     <!-- 카페 정보 (이름과 주소) -->
@@ -52,14 +52,6 @@
 
     </LinearLayout>
 
-    <!-- 더보기 아이콘 (선택 사항) -->
-    <ImageView
-        android:id="@+id/ivMoreOptions"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginStart="16dp"
-        android:src="@drawable/ic_more_vert"
-        app:tint="#999999"
-        android:contentDescription="옵션 더보기" />
+
 
 </LinearLayout>

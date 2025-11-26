@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8F8F8"
+    android:background="#FFF4F7"
     tools:context=".MainActivity"> <!-- MainActivity나 MyPageFragment로 변경하세요. -->
 
     <!-- 1. 상단 헤더 (프로필 및 설정 아이콘) -->
@@ -12,6 +12,7 @@
         android:id="@+id/header_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#FDE5EB"
         android:padding="16dp"
         app:layout_constraintTop_toTopOf="parent">
 
