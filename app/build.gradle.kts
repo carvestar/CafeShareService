@@ -45,9 +45,7 @@ dependencies {
     implementation("com.google.android.gms:play-services-maps:18.2.0")
     implementation("com.google.android.gms:play-services-location:21.0.1")
     // UI Components
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.recyclerview:recyclerview:1.3.2")
-    implementation("com.google.android.material:material:1.11.0")
     // Image Loading (Glide) - 카페 이미지용
     implementation("com.github.bumptech.glide:glide:4.16.0")
 }
