@@ -18,8 +18,8 @@
 |<img src="https://github.com/user-attachments/assets/ad387fd7-49d6-4b43-a21c-584fa47f46a2" width="100"/>|<img src="https://avatars.githubusercontent.com/u/165309143?v=4" width="100" />|<img src="https://avatars.githubusercontent.com/u/180147700?v=4" width="100"/>|
 |[@yeojeong735](https://github.com/yeojeong735)|[@carvestar](https://github.com/carvestar)|[@zziziz](https://github.com/zziziz)|
 |yeojeong735@gmail.com|fntl0326@gmail.com|zziziz@gmail.com|
-|카페 상세 관련 API 개발 담당|지도 서비스 API 담당|회원 관리 및 인증 API 담당|
-|카페 상세, 마이페이지 화면 구현 담당|홈(지도 기반) 화면 구현 담당|로그인, 회원가입 화면 구현 담당|
+|카페 상세 관련 API 개발 담당|지도 서비스 API 담당, UI 디자인 담당|회원 관리 및 인증 API 담당|
+
 
 기술 스택
 -------------
