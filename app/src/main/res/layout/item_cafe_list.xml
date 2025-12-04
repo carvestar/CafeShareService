@@ -15,7 +15,7 @@
         android:text="카페 이름"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:textColor="@color/black"/>
+        android:textColor="#BF4C65"/>
 
     <!-- 주소 -->
     <TextView

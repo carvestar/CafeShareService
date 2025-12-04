@@ -5,21 +5,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFF5F5"
     tools:context=".ReviewActivity">
 
-    <!-- 상단 지도/제목 Placeholder (실제 지도로 대체 필요) -->
+    <!-- 배경 지도 -->
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- 2. 상단 투명 공간 (지도 보일 영역) -->
     <View
         android:id="@+id/map_placeholder"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:background="@color/design_default_color_background"
+        android:background="@android:color/transparent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <!-- 메인 콘텐츠 스크롤 뷰 -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:background="#FFF5F5"
         app:layout_constraintTop_toBottomOf="@id/map_placeholder"
         app:layout_constraintBottom_toTopOf="@id/button_register">
 
@@ -37,9 +48,8 @@
                 android:layout_height="wrap_content"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                android:textColor="#E91E63"
+                android:textColor="#BF4C65"
                 android:layout_marginBottom="8dp"
-
                 android:text=""
                 tools:text="카페 핀드"/>
 
@@ -47,7 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="어떠셨나요?"
-                android:textColor="#E91E63"
+                android:textColor="#BF4C65"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="24dp"/>
 
@@ -61,11 +71,9 @@
                 android:rating="0"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="32dp"
-                android:theme="@style/PinkRatingBar" /> <!-- 별 색상을 위한 스타일 (아래 참고) -->
+                android:theme="@style/PinkRatingBar" />
 
-
-
-            <!-- 섹션 2: 사진 추가 영역 (Rounded Box) -->
+            <!-- 섹션 2: 사진 추가 영역 -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/card_add_photo"
                 android:layout_width="match_parent"
@@ -84,18 +92,18 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:src="@drawable/ic_add_photo_pink"
-                        app:tint="#E91E63"
+                        app:tint="#DD7793"
                         tools:ignore="ContentDescription" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="사진을 추가해 주세요."
-                        android:textColor="#E91E63"
+                        android:textColor="#BF4C65"
                         android:layout_marginTop="8dp"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- 섹션 3: 해시태그 추가 영역 (Rounded Box) -->
+            <!-- 섹션 3: 해시태그 추가 영역 -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/card_add_hashtag"
                 android:layout_width="match_parent"
@@ -114,17 +122,17 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="이 곳에 어울리는 해시태그를 추가해 주세요."
-                        android:textColor="#E91E63"/>
+                        android:textColor="#BF4C65"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="#해시태그"
-                        android:textColor="#E91E63"
+                        android:textColor="#DD7793"
                         android:layout_marginTop="4dp"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- 섹션 4: 리뷰 작성 영역 (Rounded Box) -->
+            <!-- 섹션 4: 리뷰 작성 영역 -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/card_write_review"
                 android:layout_width="match_parent"
@@ -142,7 +150,7 @@
                     android:padding="16dp"
                     android:background="@android:color/transparent"
                     android:hint="리뷰를 작성해 주세요.\n욕설, 비방, 명예훼손성 표현은\n누군가에게 상처가 될 수 있습니다."
-                    android:textColorHint="#E91E63"
+                    android:textColorHint="#BF4C65"
                     android:textSize="14sp"
                     android:inputType="textMultiLine"/>
 
@@ -150,7 +158,7 @@
         </LinearLayout>
     </ScrollView>
 
-    <!-- 하단 "등록" 버튼 -->
+    <!-- 4. 하단 "등록" 버튼 (탭바 위에 고정) -->
     <Button
         android:id="@+id/button_register"
         android:layout_width="match_parent"
@@ -160,16 +168,59 @@
         android:text="등록 >"
         android:textSize="18sp"
         android:textColor="@android:color/white"
-        android:backgroundTint="#E91E63"
+        android:backgroundTint="#DD7793"
         android:stateListAnimator="@null"
-        app:layout_constraintBottom_toTopOf="@id/bottom_navigation_placeholder"/>
+        app:layout_constraintBottom_toTopOf="@id/bottomBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-    <!-- 하단 내비게이션 바 Placeholder -->
-    <View
-        android:id="@+id/bottom_navigation_placeholder"
+    <!-- 5. 하단 탭바 (화면 바닥에 고정) -->
+    <LinearLayout
+        android:id="@+id/bottomBar"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="60dp"
+        android:background="@color/tab_bar_background_color"
+        android:orientation="horizontal"
+        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:background="#FFF5F5" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- 홈 버튼 -->
+        <ImageView
+            android:id="@+id/btnHome"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_home"
+            app:tint="@color/gray" />
+
+        <!-- 즐겨찾기 버튼 -->
+        <ImageView
+            android:id="@+id/btnFavorite"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:src="@android:drawable/btn_star_big_on"
+            app:tint="@color/icon_color" />
+
+        <!-- 검색 버튼 -->
+        <ImageView
+            android:id="@+id/btnSearch"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_search"
+            app:tint="@color/gray" />
+
+        <!-- 마이페이지 버튼 -->
+        <ImageView
+            android:id="@+id/btnMyPage"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_mypage"
+            app:tint="@color/gray" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

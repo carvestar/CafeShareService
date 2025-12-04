@@ -70,7 +70,7 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:src="@drawable/settings"
-                app:tint="#FFC0CB"
+                app:tint="#DD7793"
                 android:contentDescription="설정 아이콘" />
             <TextView
                 android:layout_width="wrap_content"
@@ -93,7 +93,7 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:src="@drawable/review"
-                app:tint="#FFC0CB"
+                app:tint="#DD7793"
                 android:contentDescription="내 리뷰 아이콘" />
             <TextView
                 android:layout_width="wrap_content"
@@ -115,7 +115,7 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:src="@drawable/logout"
-                app:tint="#FFC0CB"
+                app:tint="#DD7793"
                 android:contentDescription="로그아웃 아이콘" />
             <TextView
                 android:layout_width="wrap_content"
