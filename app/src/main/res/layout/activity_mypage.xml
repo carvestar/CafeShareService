@@ -79,12 +79,14 @@
 
         <!-- 내 리뷰 버튼 -->
         <LinearLayout
-            android:id="@+id/logout_button_container"
+            android:id="@+id/btn_my_review"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true">
             <ImageView
                 android:layout_width="32dp"
                 android:layout_height="32dp"
@@ -102,11 +104,14 @@
 
         <!-- 로그아웃 버튼 -->
         <LinearLayout
+            android:id="@+id/btn_logout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true">
             <ImageView
                 android:layout_width="32dp"
                 android:layout_height="32dp"
