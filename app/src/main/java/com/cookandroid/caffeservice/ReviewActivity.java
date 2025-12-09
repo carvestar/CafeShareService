@@ -1,18 +1,29 @@
 package com.cookandroid.caffeservice;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
-import android.widget.TextView; // 카페 이름 표시를 위해 추가
+import android.widget.TextView;
 import android.widget.Toast;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 
-public class ReviewActivity extends AppCompatActivity {
+// 지도 관련
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+public class ReviewActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private static final String TAG = "ReviewActivity";
 
@@ -21,6 +32,9 @@ public class ReviewActivity extends AppCompatActivity {
     private EditText reviewEditText;
     private Button registerButton;
     private TextView cafeNameTextView; // 카페 이름 표시 TextView
+
+    // 지도 객체 변수
+    private GoogleMap mMap;
 
     // 현재 리뷰를 작성할 카페 ID 및 이름
     private String cafeId;
@@ -44,12 +58,20 @@ public class ReviewActivity extends AppCompatActivity {
         registerButton = findViewById(R.id.button_register);
         cafeNameTextView = findViewById(R.id.cafe_name_title); // XML에 tv_cafe_name ID가 있다고 가정
 
+        // 배경 지도 초기화
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        if (mapFragment != null) {
+            mapFragment.getMapAsync(this);
+        }
+
         // 1-1. 카페 이름 표시 업데이트
         if (cafeName != null && cafeNameTextView != null) {
             cafeNameTextView.setText(cafeName);
         } else if (cafeNameTextView != null) {
             cafeNameTextView.setText("리뷰 작성");
         }
+
 
         // 2. 등록 버튼 클릭 리스너 (핵심 로직)
         registerButton.setOnClickListener(new View.OnClickListener() {
@@ -102,6 +124,29 @@ public class ReviewActivity extends AppCompatActivity {
         Toast.makeText(this, "리뷰 등록 시도 중... (별점: " + rating + "점)", Toast.LENGTH_LONG).show();
 
         // 리뷰 등록 성공 후 화면 닫기
-        finish();
+        finish(); // [수정됨] 화면 닫기 기능 활성화
+    }
+
+    // 지도 로딩 완료 시 호출되는 메서드
+    @Override
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+        mMap = googleMap;
+
+        // 동양미래대학교 좌표
+        LatLng dongyangUniv = new LatLng(37.499990, 126.867580);
+
+        // 마커 추가
+        mMap.addMarker(new MarkerOptions()
+                .position(dongyangUniv)
+                .title("동양미래대학교"));
+
+        // 카메라 이동
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(dongyangUniv, 17f));
+
+        // 내 위치 활성화 (권한 필요)
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            mMap.setMyLocationEnabled(true);
+        }
     }
 }
