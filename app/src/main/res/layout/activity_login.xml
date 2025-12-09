@@ -136,7 +136,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- 예시 아이콘. 실제 아이콘으로 대체 필요 -->
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
